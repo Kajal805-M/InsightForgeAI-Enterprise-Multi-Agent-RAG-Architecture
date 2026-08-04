@@ -39,6 +39,7 @@ async def stream_chat(session_id: int, query: str, db: Session) -> AsyncGenerato
 
     full_response = ""
     citations = set()
+    analyzing_sent = False
 
     try:
         # Stream the graph execution events
@@ -48,7 +49,9 @@ async def stream_chat(session_id: int, query: str, db: Session) -> AsyncGenerato
             
             # UX: Notify frontend when an agent starts working
             if kind == "on_chain_start" and name in ["Planner", "Retriever", "Analysis", "Report", "Critic"]:
-                yield f"data: {json.dumps({'type': 'token', 'content': f'\n\n> **System:** {name} Agent is analyzing...\n\n'})}\n\n"
+                if not analyzing_sent:
+                    yield f"data: {json.dumps({'type': 'status', 'content': 'System is Analyzing...'})}\n\n"
+                    analyzing_sent = True
             
             # UX: Emit the final report when the Report node finishes
             elif kind == "on_chain_end" and name == "Report":
@@ -75,12 +78,20 @@ async def stream_chat(session_id: int, query: str, db: Session) -> AsyncGenerato
         import traceback
         traceback.print_exc()
         logger.error(f"Error streaming LangGraph: {str(e)}")
-        yield f"data: {json.dumps({'type': 'error', 'content': f'Error in AI workflow: {str(e)}'})}\n\n"
+        
+        error_msg = str(e)
+        if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg or "Quota exceeded" in error_msg:
+            friendly_msg = "Google Gemini API rate limit exceeded (Free Tier). Because this uses multiple AI agents, you hit the per-minute limit. Please wait 15 seconds and try again."
+        else:
+            friendly_msg = "An error occurred in the AI workflow. Please try again."
+            
+        yield f"data: {json.dumps({'type': 'error', 'content': friendly_msg})}\n\n"
     
     finally:
         yield f"data: {json.dumps({'type': 'end'})}\n\n"
         
-        # Save the complete AI response back to SQLite
-        ai_msg = ChatMessage(session_id=session_id, sender="AI", content=full_response)
-        db.add(ai_msg)
-        db.commit()
+        # Save the complete AI response back to SQLite only if it's not empty
+        if full_response.strip():
+            ai_msg = ChatMessage(session_id=session_id, sender="AI", content=full_response)
+            db.add(ai_msg)
+            db.commit()
