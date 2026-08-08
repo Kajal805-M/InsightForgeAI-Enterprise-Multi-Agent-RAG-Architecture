@@ -1,11 +1,14 @@
 import os
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from app.core.config import settings
 
-# Initialize Hugging Face embeddings
-# Using a fast, local sentence-transformer model by default
-embeddings = HuggingFaceEmbeddings(model_name=settings.EMBEDDING_MODEL)
+# Initialize Google Generative AI embeddings
+# Using Gemini embeddings API instead of local HuggingFace to save memory (prevents OOM on Render Free Tier)
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001",
+    google_api_key=settings.GEMINI_API_KEY
+)
 
 # Ensure the Chroma DB directory exists
 os.makedirs(settings.CHROMA_DB_DIR, exist_ok=True)

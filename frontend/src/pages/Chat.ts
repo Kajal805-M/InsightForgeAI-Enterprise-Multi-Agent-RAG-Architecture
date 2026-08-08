@@ -154,12 +154,15 @@ export function Chat(): HTMLElement {
     if (titleEl) titleEl.textContent = title;
   };
 
-  const appendMessage = (sender: 'User' | 'AI', content: string = '') => {
+  const appendMessage = (sender: 'User' | 'AI', content: string = '', timestampStr?: string) => {
     const msgDiv = document.createElement('div');
     msgDiv.className = `flex w-full ${sender === 'User' ? 'justify-end' : 'justify-start'}`;
     
+    const bubbleWrapper = document.createElement('div');
+    bubbleWrapper.className = `flex flex-col max-w-[85%] ${sender === 'User' ? 'items-end' : 'items-start'}`;
+    
     const bubble = document.createElement('div');
-    bubble.className = `max-w-[85%] rounded-2xl px-5 py-4 text-sm shadow-sm ${
+    bubble.className = `rounded-2xl px-5 py-4 text-sm shadow-sm w-full ${
       sender === 'User' 
         ? 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]' 
         : 'bg-[hsl(var(--muted))]/50 text-[hsl(var(--foreground))] border'
@@ -172,7 +175,23 @@ export function Chat(): HTMLElement {
     }
     
     bubble.appendChild(contentDiv);
-    msgDiv.appendChild(bubble);
+    bubbleWrapper.appendChild(bubble);
+    
+    const timeDiv = document.createElement('div');
+    timeDiv.className = 'text-[10px] text-[hsl(var(--muted-foreground))] mt-1.5 px-2 font-medium opacity-70';
+    
+    let timeText = '';
+    if (timestampStr) {
+       const d = new Date(timestampStr);
+       timeText = isNaN(d.getTime()) ? timestampStr : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + d.toLocaleDateString();
+    } else {
+       const d = new Date();
+       timeText = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' · ' + d.toLocaleDateString();
+    }
+    timeDiv.textContent = timeText;
+    
+    bubbleWrapper.appendChild(timeDiv);
+    msgDiv.appendChild(bubbleWrapper);
     messagesContainer.appendChild(msgDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
@@ -211,7 +230,7 @@ export function Chat(): HTMLElement {
         appendMessage('AI', 'Hello! I am your Enterprise AI Assistant. How can I help you analyze your documents today?');
       } else {
         history.forEach(msg => {
-          appendMessage(msg.sender, msg.content);
+          appendMessage(msg.sender, msg.content, msg.timestamp);
         });
       }
     } catch (e) {
@@ -237,7 +256,7 @@ export function Chat(): HTMLElement {
       console.error(e);
       await startNewSession(); // Fallback if API fails
     }
-    import('lucide').then(({ createIcons, icons }) => createIcons({ icons: icons as any }));
+    import('lucide').then((lucide) => lucide.createIcons({ icons: lucide }));
   };
 
   // Submit Handler with SSE Streaming
@@ -261,6 +280,10 @@ export function Chat(): HTMLElement {
     }
 
     const aiContentDiv = appendMessage('AI', '');
+    // Immediately show loading state to bypass DOMPurify stripping data-lucide attributes
+    aiContentDiv.innerHTML = `<div class="animate-pulse flex items-center gap-2 text-[hsl(var(--primary))] font-medium"><i data-lucide="loader-2" class="animate-spin h-4 w-4"></i> System is Analyzing...</div>`;
+    import('lucide').then((lucide) => lucide.createIcons({ icons: lucide }));
+    
     let aiFullContent = '';
     
     try {
@@ -291,6 +314,10 @@ export function Chat(): HTMLElement {
                 if (data.type === 'token') {
                   aiFullContent += data.content;
                   aiContentDiv.innerHTML = DOMPurify.sanitize(marked.parse(aiFullContent) as string);
+                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                } else if (data.type === 'status') {
+                  aiContentDiv.innerHTML = `<div class="animate-pulse flex items-center gap-2 text-[hsl(var(--primary))] font-medium"><i data-lucide="loader-2" class="animate-spin h-4 w-4"></i> ${data.content}</div>`;
+                  import('lucide').then((lucide) => lucide.createIcons({ icons: lucide }));
                   messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 } else if (data.type === 'citations') {
                   appendCitations(aiContentDiv, data.content);
