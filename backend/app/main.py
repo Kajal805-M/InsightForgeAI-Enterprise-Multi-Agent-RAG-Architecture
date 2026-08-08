@@ -28,15 +28,14 @@ def create_app() -> FastAPI:
         redoc_url="/redoc"
     )
 
-    # Configure CORS Middleware for frontend access
-    if settings.BACKEND_CORS_ORIGINS:
-        app_instance.add_middleware(
-            CORSMiddleware,
-            allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
+    # Configure CORS Middleware for frontend access (Allow all origins for easy deployment)
+    app_instance.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     # Register global exception handlers
     app_instance.add_exception_handler(AppException, app_exception_handler)
