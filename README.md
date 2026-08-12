@@ -88,15 +88,15 @@ graph TD
 
 <div align="left">
 
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
-![LangGraph](https://img.shields.io/badge/-LangGraph-1C3C3C?style=flat-square)
-![Gemini](https://img.shields.io/badge/-Gemini_1.5_Pro-8E75B2?style=flat-square&logo=google-gemini&logoColor=white)
-![ChromaDB](https://img.shields.io/badge/-ChromaDB-FF6F00?style=flat-square)
-![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
-![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
-![NGINX](https://img.shields.io/badge/-NGINX-009639?style=flat-square&logo=nginx&logoColor=white)
+| ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white) **Python** |
+| ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) **FastAPI** |
+| ![LangGraph](https://img.shields.io/badge/-LangGraph-1C3C3C?style=flat-square) **LangChain** |
+| ![Gemini](https://img.shields.io/badge/-Gemini_1.5_Pro-8E75B2?style=flat-square&logo=google-gemini&logoColor=white) **Gemini** |
+| ![ChromaDB](https://img.shields.io/badge/-ChromaDB-FF6F00?style=flat-square) **ChromaDB** |
+| ![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white) **SQLite** |
+| ![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white) **Vite** | 
+| ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white) **Docker** |
+| ![NGINX](https://img.shields.io/badge/-NGINX-009639?style=flat-square&logo=nginx&logoColor=white) **NGINX** |
 
 </div>
 
