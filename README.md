@@ -28,7 +28,7 @@ It's wrapped in a premium **glassmorphism UI**, backed by vector search, and shi
 
 ## 🌐 Live Demo
 
-> 🔗 **[Add your live demo link here]** — e.g. `https://insightforge-ai.onrender.com`
+> 🔗 **[https://insightforgeai-enterprise-multi-agent-7vhk.onrender.com]** 
 >
 > Once deployed via the included Render Blueprint (see [Deployment Guide](#️-deployment-guide-rendercom)), replace this placeholder with your public URL so visitors can try it instantly.
 
