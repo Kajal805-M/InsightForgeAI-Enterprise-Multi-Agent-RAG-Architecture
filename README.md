@@ -84,6 +84,22 @@ graph TD
 4. **Report Agent** — formats findings, optionally generating a PDF report
 5. **Critic Agent** — reflects on the output for accuracy and quality before responding
 
+## 🛠 Tech Stack
+
+<div align="left">
+
+![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![LangGraph](https://img.shields.io/badge/-LangGraph-1C3C3C?style=flat-square)
+![Gemini](https://img.shields.io/badge/-Gemini_1.5_Pro-8E75B2?style=flat-square&logo=google-gemini&logoColor=white)
+![ChromaDB](https://img.shields.io/badge/-ChromaDB-FF6F00?style=flat-square)
+![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![NGINX](https://img.shields.io/badge/-NGINX-009639?style=flat-square&logo=nginx&logoColor=white)
+
+</div>
+
 ## 📂 Folder Structure
 
 ```
@@ -172,21 +188,6 @@ This repository ships with a `render.yaml` Blueprint for 1-click cloud deploymen
 - [ ] Real-time WebSockets for multi-user collaborative chat
 - [ ] Additional agent nodes (e.g., Code Execution Agent, Web Search Agent)
 
-## 🛠 Tech Stack
-
-<div align="left">
-
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
-![LangGraph](https://img.shields.io/badge/-LangGraph-1C3C3C?style=flat-square)
-![Gemini](https://img.shields.io/badge/-Gemini_1.5_Pro-8E75B2?style=flat-square&logo=google-gemini&logoColor=white)
-![ChromaDB](https://img.shields.io/badge/-ChromaDB-FF6F00?style=flat-square)
-![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
-![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
-![NGINX](https://img.shields.io/badge/-NGINX-009639?style=flat-square&logo=nginx&logoColor=white)
-
-</div>
 
 ## 🤝 Contributing
 
